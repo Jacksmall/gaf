@@ -111,6 +111,8 @@ func main() {
 
 
 ```
+#### 3.命令行test
+```
 \>go run main.go
 success contect to mysql database
 
@@ -133,7 +135,7 @@ success contect to mysql database
 2022/06/06 10:00:01 Feature: name: "101 New Jersey 10, Whippany, NJ 07981, USA", point:(408122808, -743999179)
 2022/06/06 10:00:01 Feature: name: "U.S. 6, Shohola, PA 18458, USA", point:(413628156, -749015468)
 2022/06/06 10:00:01 Feature: name: "5 Conners Road, Kingston, NY 12401, USA", point:(419999544, -740371136)
-
-#### 3.持续更新中
+```
+#### 4.持续更新中
       
        
