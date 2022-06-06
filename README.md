@@ -1,10 +1,39 @@
+# go-api-framework
+快速搭建go-api项目框架，集成了gin,gorm,rabbitmq,redis等插件
+#### 1.目录结构
+```
+app
+|----cache    // 缓存
+      |--base.go
+      |--redis.go
+|----controllers // 控制器层
+      |--base.go
+      |--xxx_controller.go
+|----database   // 数据库连接层
+      |--base.go
+|----entry    // 输入实体层
+      |--base.go
+      |--xxx.go
+|----models   // 模型层
+      |--base.go
+      |--xxx.go
+|----routes   // 路由层
+      |--base.go
+      |--xxx.go
+      |--middleware.go
+|----services // 业务服务层
+      |--base.go
+      |--xxx_service.go
+```
+#### 2.使用
+请参照main.go
+```
 package main
 
 import (
 	"context"
 	"fmt"
 	"log"
-	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -13,7 +42,6 @@ import (
 	"github.com/Jacksmall/go-api-framework/database"
 	"github.com/Jacksmall/go-api-framework/routes"
 	"github.com/gin-gonic/gin"
-	"google.golang.org/grpc"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -64,8 +92,9 @@ func initDatabase() {
 func main() {
 	initDatabase()
 	initRouter()
-
-	s := grpc.NewServer()
-	lis, _ := net.Listen("tcp", "localhost:50051")
-	s.Serve(lis)
 }
+
+```
+#### 3.持续更新中
+      
+       
