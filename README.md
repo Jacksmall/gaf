@@ -1,6 +1,7 @@
 # go-api-framework
 快速搭建go-api项目框架，集成了gin,gorm,rabbitmq,redis等插件
 #### 1.目录结构
+```
 app
 |----cache    // 缓存
       |--base.go
@@ -23,6 +24,7 @@ app
 |----services // 业务服务层
       |--base.go
       |--xxx_service.go
+```
 #### 2.使用
 请参照main.go
 ```
