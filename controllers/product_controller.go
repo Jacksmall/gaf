@@ -8,9 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type ProductControlller struct{}
+type ProductController struct{}
 
-func (p *ProductControlller) GetProducts(ctx *gin.Context) {
+func (p *ProductController) GetProducts(ctx *gin.Context) {
 	var req entry.AdminProductListReq
 
 	if err := ctx.ShouldBindQuery(&req); err != nil {
@@ -36,6 +36,6 @@ func (p *ProductControlller) GetProducts(ctx *gin.Context) {
 	})
 }
 
-func (p *ProductControlller) GetProduct(ctx *gin.Context) {
+func (p *ProductController) GetProduct(ctx *gin.Context) {
 	AdminProductService.GetProduct(ctx)
 }
