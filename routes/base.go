@@ -10,7 +10,7 @@ import (
 var (
 	router *gin.Engine
 
-	adminProductController controllers.ProductControlller
+	adminProductController controllers.ProductController
 )
 
 func init() {
