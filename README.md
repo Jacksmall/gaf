@@ -33,6 +33,8 @@ app
 |----services // 业务服务层
       |--base.go
       |--xxx_service.go
+|----runner // 运行任务层
+      |--runner.go
 ```
 #### 2.使用
 请参照main.go
