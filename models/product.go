@@ -31,37 +31,43 @@ func GetProduct(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, product)
 }
 
-func CreateProduct(ctx *gin.Context) {
-	var product Product
-	if err := ctx.ShouldBind(&product); err != nil {
-		ctx.JSON(http.StatusInternalServerError, err.Error())
-	}
+func CreateProduct(req entry.AdminAddProductReq) error {
 	db := database.DBConn
-	db.Create(&product)
-	ctx.JSON(http.StatusOK, product)
+	product := &Product{
+		Code:  req.Code,
+		Price: uint(req.Price),
+	}
+	if err := db.Create(product).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
-// func UpdateProduct(ctx *fiber.Ctx) error {
-// 	db := database.DBConn
-// 	var product Product
-// 	db = db.Take(&product, ctx.Params("id"))
-// 	if db.Error != nil {
-// 		return ctx.SendStatus(http.StatusNotFound)
-// 	}
-// 	if err := ctx.BodyParser(&product); err != nil {
-// 		return ctx.SendStatus(http.StatusBadRequest)
-// 	}
-// 	db.Save(&product)
-// 	return ctx.JSON(product)
-// }
+func UpdateProduct(ctx *gin.Context) error {
+	db := database.DBConn
+	var product Product
+	db = db.Take(&product, ctx.Param("id"))
+	if db.Error != nil {
+		return db.Error
+	}
+	if err := ctx.ShouldBind(&product); err != nil {
+		return err
+	}
+	if err := db.Save(&product).Error; err != nil {
+		return err
+	}
+	return nil
+}
 
-// func DeleteProduct(ctx *fiber.Ctx) error {
-// 	db := database.DBConn
-// 	var product Product
-// 	db = db.Take(&product, ctx.Params("id"))
-// 	if db.Error != nil {
-// 		return ctx.SendStatus(http.StatusNotFound)
-// 	}
-// 	db.Delete(&product)
-// 	return ctx.SendStatus(http.StatusOK)
-// }
+func DeleteProduct(ctx *gin.Context) error {
+	db := database.DBConn
+	var product Product
+	db = db.Take(&product, ctx.Param("id"))
+	if db.Error != nil {
+		return db.Error
+	}
+	if err := db.Delete(&product).Error; err != nil {
+		return err
+	}
+	return nil
+}

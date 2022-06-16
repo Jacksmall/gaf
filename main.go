@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -13,7 +12,6 @@ import (
 	"github.com/Jacksmall/go-api-framework/database"
 	"github.com/Jacksmall/go-api-framework/routes"
 	"github.com/gin-gonic/gin"
-	"google.golang.org/grpc"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -36,7 +34,7 @@ func initRouter() {
 	}()
 
 	// 等待中断信号优雅关闭服务器
-	quit := make(chan os.Signal)
+	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
 
@@ -53,7 +51,7 @@ func initRouter() {
 
 func initDatabase() {
 	var err error
-	dsn := "root:root@tcp(127.0.0.1:3306)/recordings?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:chenkuanwo5@tcp(127.0.0.1:3306)/recordings?charset=utf8mb4&parseTime=True&loc=Local"
 	database.DBConn, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
@@ -65,7 +63,7 @@ func main() {
 	initDatabase()
 	initRouter()
 
-	s := grpc.NewServer()
-	lis, _ := net.Listen("tcp", "localhost:50051")
-	s.Serve(lis)
+	// s := grpc.NewServer()
+	// lis, _ := net.Listen("tcp", "localhost:50051")
+	// s.Serve(lis)
 }
