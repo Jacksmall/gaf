@@ -16,3 +16,5 @@ require (
 	gorm.io/driver/mysql v1.3.4
 	gorm.io/gorm v1.23.5
 )
+
+replace github.com/Jacksmall/go-api-framework/entry => ../entry

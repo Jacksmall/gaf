@@ -1,16 +1,15 @@
 package controllers
 
 import (
-	"log"
-	"net/http"
-
 	"github.com/Jacksmall/go-api-framework/entry"
+	"github.com/Jacksmall/go-api-framework/helper/response"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 type ProductController struct{}
 
-// 分页获取商品列表
+// GetProducts 分页获取商品列表
 func (p *ProductController) GetProducts(ctx *gin.Context) {
 	var req entry.AdminProductListReq
 
@@ -28,19 +27,16 @@ func (p *ProductController) GetProducts(ctx *gin.Context) {
 		List:  list,
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"code": 0,
-		"msg":  "success",
-		"data": data,
-	})
+	rs := response.NewResponse(0, "SUCCESS", data)
+	rs.SuccessJSON(ctx)
 }
 
-// 获取指定商品
+// GetProduct 获取指定商品
 func (p *ProductController) GetProduct(ctx *gin.Context) {
 	AdminProductService.GetProduct(ctx)
 }
 
-// 创建商品
+// AddProduct 创建商品
 func (p *ProductController) AddProduct(ctx *gin.Context) {
 	var req entry.AdminAddProductReq
 	if err := ctx.ShouldBind(&req); err != nil {
@@ -50,34 +46,27 @@ func (p *ProductController) AddProduct(ctx *gin.Context) {
 	if err := AdminProductService.AddProduct(req); err != nil {
 		log.Fatalf("admin add product error: %v", err)
 	}
-	ctx.JSON(http.StatusOK, gin.H{
-		"code": 0,
-		"msg":  "success",
-		"data": req,
-	})
+
+	rs := response.NewResponse(0, "SUCCESS", req)
+	rs.SuccessJSON(ctx)
 }
 
-// 删除指定商品
+// DeleteProduct 删除指定商品
 func (p *ProductController) DeleteProduct(ctx *gin.Context) {
 	if err := AdminProductService.DeleteProduct(ctx); err != nil {
 		log.Fatalf("admin delete product error: %v", err)
 	}
-	ctx.JSON(http.StatusOK, gin.H{
-		"code": 0,
-		"msg":  "success",
-		"data": true,
-	})
+
+	rs := response.NewResponse(0, "SUCCESS", true)
+	rs.SuccessJSON(ctx)
 }
 
-// 更新指定商品
+// UpdateProduct 更新指定商品
 func (p *ProductController) UpdateProduct(ctx *gin.Context) {
 	if err := AdminProductService.UpdateProduct(ctx); err != nil {
 		log.Fatalf("admin update product error: %v", err)
 	}
-	ctx.JSON(http.StatusOK, gin.H{
-		"code": 0,
-		"msg":  "success",
-		"data": true,
-	})
 
+	rs := response.NewResponse(0, "SUCCESS", true)
+	rs.SuccessJSON(ctx)
 }

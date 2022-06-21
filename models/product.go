@@ -33,13 +33,16 @@ func GetProduct(ctx *gin.Context) {
 
 func CreateProduct(req entry.AdminAddProductReq) error {
 	db := database.DBConn
+	tx := db.Begin()
 	product := &Product{
 		Code:  req.Code,
 		Price: uint(req.Price),
 	}
 	if err := db.Create(product).Error; err != nil {
+		tx.Rollback()
 		return err
 	}
+	tx.Commit()
 	return nil
 }
 

@@ -1,17 +1,16 @@
 package controllers
 
 import (
-	"log"
-	"net/http"
-
 	"github.com/Jacksmall/go-api-framework/entry"
+	"github.com/Jacksmall/go-api-framework/helper/response"
 	"github.com/Jacksmall/go-api-framework/services"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 type CartController struct{}
 
-// 加入购物车
+// Add 加入购物车
 // route POST /api/v1/cart/add
 func (c *CartController) Add(ctx *gin.Context) {
 	var req entry.APICartAddReq
@@ -24,9 +23,7 @@ func (c *CartController) Add(ctx *gin.Context) {
 	if err != nil {
 		log.Fatalf("Error cart service add: %v", err)
 	}
-	ctx.JSON(http.StatusOK, gin.H{
-		"code": 0,
-		"msg":  "success",
-		"data": id,
-	})
+
+	rs := response.NewResponse(0, "SUCCESS", id)
+	rs.SuccessJSON(ctx)
 }
