@@ -1,5 +1,7 @@
 package entry
 
+import "time"
+
 type PageReq struct {
 	// 通用参数--第几页 參數位置隨請求方式
 	Page int64 `json:"page" form:"page" binding:"omitempty"`
@@ -38,4 +40,9 @@ type PageRes struct {
 	Total int64 `json:"total"`
 	// 列表数据
 	List interface{} `json:"list"`
+}
+
+type BaseTimeField struct {
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }

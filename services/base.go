@@ -10,4 +10,5 @@ var (
 
 var (
 	AdminProductService ProductService
+	ApiCartService      CartService
 )

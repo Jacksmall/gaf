@@ -11,6 +11,7 @@ var (
 	router *gin.Engine
 
 	adminProductController controllers.ProductController
+	apiCartController      controllers.CartController
 )
 
 func init() {
@@ -28,5 +29,6 @@ func init() {
 
 func InitRoutes() *gin.Engine {
 	AdminRoute()
+	ApiRoute()
 	return router
 }

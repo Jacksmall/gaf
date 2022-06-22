@@ -22,3 +22,24 @@ func (s *ProductService) GetProducts(req entry.AdminProductListReq) (list []mode
 func (s *ProductService) GetProduct(ctx *gin.Context) {
 	models.GetProduct(ctx)
 }
+
+func (s *ProductService) AddProduct(req entry.AdminAddProductReq) (err error) {
+	if err = models.CreateProduct(req); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *ProductService) UpdateProduct(ctx *gin.Context) (err error) {
+	if err = models.UpdateProduct(ctx); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *ProductService) DeleteProduct(ctx *gin.Context) (err error) {
+	if err = models.DeleteProduct(ctx); err != nil {
+		return err
+	}
+	return nil
+}

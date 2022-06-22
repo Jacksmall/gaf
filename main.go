@@ -35,7 +35,7 @@ func initRouter() {
 	}()
 
 	// 等待中断信号优雅关闭服务器
-	quit := make(chan os.Signal)
+	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
 
