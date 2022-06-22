@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/Jacksmall/go-api-framework/models"
 	"log"
-	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -13,7 +13,6 @@ import (
 	"github.com/Jacksmall/go-api-framework/database"
 	"github.com/Jacksmall/go-api-framework/routes"
 	"github.com/gin-gonic/gin"
-	"google.golang.org/grpc"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -63,9 +62,12 @@ func initDatabase() {
 
 func main() {
 	initDatabase()
+
+	database.DBConn.AutoMigrate(&models.Goods{})
+
 	initRouter()
 
-	s := grpc.NewServer()
-	lis, _ := net.Listen("tcp", "localhost:50051")
-	s.Serve(lis)
+	// s := grpc.NewServer()
+	// lis, _ := net.Listen("tcp", "localhost:50051")
+	// s.Serve(lis)
 }

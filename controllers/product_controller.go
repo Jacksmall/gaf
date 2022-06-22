@@ -1,16 +1,16 @@
 package controllers
 
 import (
-	"log"
-	"net/http"
-
 	"github.com/Jacksmall/go-api-framework/entry"
+	"github.com/Jacksmall/go-api-framework/utils"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 type ProductController struct{}
 
 func (p *ProductController) GetProducts(ctx *gin.Context) {
+	var respMsg utils.RespMsg
 	var req entry.AdminProductListReq
 
 	if err := ctx.ShouldBindQuery(&req); err != nil {
@@ -28,14 +28,13 @@ func (p *ProductController) GetProducts(ctx *gin.Context) {
 		Total: total,
 		List:  list,
 	}
-
-	ctx.JSON(http.StatusOK, gin.H{
-		"code": 0,
-		"msg":  "success",
-		"data": data,
-	})
+	respMsg.Suc(ctx, 0, data)
 }
 
 func (p *ProductController) GetProduct(ctx *gin.Context) {
 	AdminProductService.GetProduct(ctx)
+}
+
+func (p *ProductController) createProduct(ctx *gin.Context) {
+
 }
