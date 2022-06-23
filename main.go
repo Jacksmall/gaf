@@ -52,7 +52,7 @@ func initRouter() {
 
 func initDatabase() {
 	var err error
-	dsn := "root:chenkuanwo5@tcp(127.0.0.1:3306)/recordings?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:root@tcp(127.0.0.1:3306)/recordings?charset=utf8mb4&parseTime=True&loc=Local"
 	database.DBConn, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
