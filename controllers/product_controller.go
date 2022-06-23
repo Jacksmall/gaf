@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"log"
+	"net/http"
 
 	"github.com/Jacksmall/go-api-framework/entry"
 	"github.com/Jacksmall/go-api-framework/helper/response"
@@ -11,7 +12,7 @@ import (
 type ProductController struct{}
 
 // GetProducts 分页获取商品列表
-func (p *ProductController) GetProducts(ctx *gin.Context) {
+func (p ProductController) GetProducts(ctx *gin.Context) {
 	var req entry.AdminProductListReq
 
 	if err := ctx.ShouldBindQuery(&req); err != nil {
@@ -20,25 +21,26 @@ func (p *ProductController) GetProducts(ctx *gin.Context) {
 
 	list, total, err := AdminProductService.GetProducts(req)
 	if err != nil {
-		log.Fatalf("admin product controller get products error: %v", err)
+		log.Fatal(err)
 	}
-
-	data := entry.PageRes{
-		Total: total,
-		List:  list,
+	data := map[string]interface{}{
+		"list":  list,
+		"total": total,
 	}
-
-	rs := response.NewResponse(0, "SUCCESS", data)
-	rs.SuccessJSON(ctx)
+	ctx.JSON(http.StatusOK, gin.H{
+		"code": 0,
+		"msg":  "SUCCESS",
+		"data": data,
+	})
 }
 
 // GetProduct 获取指定商品
-func (p *ProductController) GetProduct(ctx *gin.Context) {
+func (p ProductController) GetProduct(ctx *gin.Context) {
 	AdminProductService.GetProduct(ctx)
 }
 
 // AddProduct 创建商品
-func (p *ProductController) AddProduct(ctx *gin.Context) {
+func (p ProductController) AddProduct(ctx *gin.Context) {
 	var req entry.AdminAddProductReq
 	if err := ctx.ShouldBind(&req); err != nil {
 		log.Fatalf("添加商品参数错误: %v", err)
@@ -53,7 +55,7 @@ func (p *ProductController) AddProduct(ctx *gin.Context) {
 }
 
 // DeleteProduct 删除指定商品
-func (p *ProductController) DeleteProduct(ctx *gin.Context) {
+func (p ProductController) DeleteProduct(ctx *gin.Context) {
 	if err := AdminProductService.DeleteProduct(ctx); err != nil {
 		log.Fatalf("admin delete product error: %v", err)
 	}
@@ -63,7 +65,7 @@ func (p *ProductController) DeleteProduct(ctx *gin.Context) {
 }
 
 // UpdateProduct 更新指定商品
-func (p *ProductController) UpdateProduct(ctx *gin.Context) {
+func (p ProductController) UpdateProduct(ctx *gin.Context) {
 	if err := AdminProductService.UpdateProduct(ctx); err != nil {
 		log.Fatalf("admin update product error: %v", err)
 	}

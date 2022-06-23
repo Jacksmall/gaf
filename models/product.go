@@ -15,6 +15,10 @@ type Product struct {
 	Price uint
 }
 
+func (p Product) TableName() string {
+	return "products"
+}
+
 func GetProducts(req entry.AdminProductListReq) (list []Product, total int64, err error) {
 	db := database.DBConn
 	err = db.Model(&Product{}).Count(&total).Error

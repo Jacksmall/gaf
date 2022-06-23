@@ -57,6 +57,7 @@ func initDatabase() {
 	if err != nil {
 		panic("failed to connect database")
 	}
+	models.SetDB(database.DBConn)
 	fmt.Println("success contect to mysql database")
 }
 

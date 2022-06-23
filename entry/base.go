@@ -4,19 +4,19 @@ import "time"
 
 type PageReq struct {
 	// 通用参数--第几页 參數位置隨請求方式
-	Page int64 `json:"page" form:"page" binding:"omitempty"`
+	Page int `json:"page" form:"page" binding:"omitempty"`
 
 	// 通用参数--每页数量 參數位置隨請求方式
-	Limit int64 `json:"limit" form:"limit" binding:"omitempty,max=1000"`
+	Limit int `json:"limit" form:"limit" binding:"omitempty,max=1000"`
 }
 
 // GetOffset 获取偏移量
-func (s PageReq) GetOffset() int64 {
+func (s PageReq) GetOffset() int {
 	return (s.GetPage() - 1) * s.GetLimit()
 }
 
 // GetPage 获取页码，不能小于0
-func (s PageReq) GetPage() int64 {
+func (s PageReq) GetPage() int {
 	if s.Page <= 0 {
 		return 1
 	}
@@ -24,7 +24,7 @@ func (s PageReq) GetPage() int64 {
 }
 
 // GetLimit 获取显示条数 不能小于0 不能大于1000
-func (s PageReq) GetLimit() int64 {
+func (s PageReq) GetLimit() int {
 	if s.Limit <= 0 {
 		return 10
 	} else if s.Limit > 1000 {
