@@ -16,7 +16,8 @@ var (
 
 func init() {
 	router = gin.New()
-	router.Use(gin.Logger(), gin.Recovery())
+	router.Use(Logger())
+	router.Use(gin.Recovery())
 
 	router.NoRoute(func(ctx *gin.Context) {
 		ctx.JSON(http.StatusNotFound, gin.H{
