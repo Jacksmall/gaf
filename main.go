@@ -3,12 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/Jacksmall/go-api-framework/models"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/Jacksmall/go-api-framework/library/log"
+	"github.com/Jacksmall/go-api-framework/models"
 
 	"github.com/Jacksmall/go-api-framework/database"
 	"github.com/Jacksmall/go-api-framework/routes"
@@ -30,7 +31,7 @@ func initRouter() {
 
 	go func() {
 		if err := server.ListenAndServe(); err != nil && err == http.ErrServerClosed {
-			log.Fatalf("listen: %s\n", err)
+			log.Error("listen: %s\n", err)
 		}
 	}()
 
@@ -39,15 +40,15 @@ func initRouter() {
 	signal.Notify(quit, os.Interrupt)
 	<-quit
 
-	log.Println("Shutdown Server...")
+	log.Info("Shutdown Server...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	if err := server.Shutdown(ctx); err != nil {
-		log.Fatal("Server Shutdown:", err)
+		log.Error("Server Shutdown:", err)
 	}
-	log.Println("Server existing")
+	log.Info("Server existing")
 }
 
 func initDatabase() {
